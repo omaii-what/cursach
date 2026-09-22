@@ -1,4 +1,4 @@
-package com.example.sudoku
+package com.example.cursach
 
 import kotlin.random.Random
 

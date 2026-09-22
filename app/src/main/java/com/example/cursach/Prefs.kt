@@ -1,4 +1,4 @@
-package com.example.sudoku
+package com.example.cursach
 
 import android.content.Context
 

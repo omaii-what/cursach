@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@drawable/bg">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сложность игры"
+        android:fontFamily="@font/arteks_black"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="#325aaf"
+        android:textSize="32sp"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:layout_marginBottom="50dp" />
+
+    <Button
+        android:id="@+id/btnEasy"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:text="Лёгкий"
+        android:fontFamily="@font/arteks_regular"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#56b3e9"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Заполнено большинство клеток"
+        android:textColor="#8c97a3"
+        android:textSize="16sp"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:fontFamily="@font/arteks_regular"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/btnMed"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:text="Средний"
+        android:fontFamily="@font/arteks_regular"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#4ea0dc" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Заполнена часть клеток"
+        android:textColor="#8c97a3"
+        android:textSize="16sp"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:fontFamily="@font/arteks_regular"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/btnHard"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:text="Сложный"
+        android:fontFamily="@font/arteks_regular"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3f7bc3"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Заполнено 0 клеток"
+        android:textColor="#8c97a3"
+        android:textSize="16sp"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:fontFamily="@font/arteks_regular"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="60dp" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:text="Назад"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/arteks_regular"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#325aaf" />
+
+</LinearLayout>

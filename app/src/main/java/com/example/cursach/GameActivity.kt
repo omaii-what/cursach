@@ -1,4 +1,4 @@
-package com.example.sudoku
+package com.example.cursach
 
 import android.graphics.Color
 import android.os.Bundle
@@ -54,12 +54,11 @@ class GameActivity : AppCompatActivity() {
 
         solved = Sudoku.generateSolved(size)
 
-        // Количество пустых клеток в зависимости от уровня
         val total = size * size
         val emptyCount = when (level) {
-            0 -> total / 3          // легко — примерно треть пустых
-            1 -> total / 2          // средне — половина
-            else -> total - 2       // сложно — почти всё пусто
+            0 -> total / 3
+            1 -> total / 2
+            else -> total - 2
         }
         puzzle = Sudoku.makePuzzle(solved, size, emptyCount)
         fixed = Array(size) { r -> BooleanArray(size) { c -> puzzle[r][c] != 0 } }
@@ -102,7 +101,6 @@ class GameActivity : AppCompatActivity() {
         if (fixed[selectedR][selectedC]) return
 
         puzzle[selectedR][selectedC] = n
-
         if (n != solved[selectedR][selectedC]) {
             errors++
             tvErrors.text = "Ошибки: $errors"
@@ -134,7 +132,6 @@ class GameActivity : AppCompatActivity() {
                 if (puzzle[r][c] != solved[r][c]) return
 
         running = false
-        // Рекорд — только если без ошибок
         if (errors == 0) {
             Prefs.saveRecord(this, size, level, seconds)
         }

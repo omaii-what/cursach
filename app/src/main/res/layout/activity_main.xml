@@ -3,16 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="@drawable/bg">
 
-    <TextView
+<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Судоку"
         android:textColor="#325aaf"
         android:textSize="54sp"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
         android:textStyle="bold"
-        android:fontFamily="@font/Arteks_black"
+        android:fontFamily="@font/arteks_black"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"/>
     <TextView
@@ -21,81 +25,65 @@
         android:text="Играй каждый день!"
         android:textColor="#8c97a3"
         android:textSize="18sp"
-        android:fontFamily="@font/Arteks_regular"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:fontFamily="@font/arteks_regular"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="50dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnGrid"
+        android:backgroundTint="#56b3e9"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="Размер сетки:"/>
+        android:text="Изменить размер сетки"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/arteks_regular"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal" />
 
-    <RadioGroup
-        android:id="@+id/radioSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/radio4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4×4"
-            android:layout_marginRight="20dp"
-            android:checked="true"/>
-        <RadioButton
-            android:id="@+id/radio6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="6×6"/>
-    </RadioGroup>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnDifficulty"
+        android:backgroundTint="#4ea0dc"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:text="Сложность:"
-        android:textSize="18dp"
-        android:layout_marginTop="32dp"/>
+        android:text="Изменить сложность"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/arteks_regular"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal" />
 
-    <RadioGroup
-        android:id="@+id/radioDiff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="40dp">
-        <RadioButton
-            android:id="@+id/radioEasy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Легко"
-            android:layout_marginRight="20dp"
-            android:checked="true"/>
-        <RadioButton
-            android:id="@+id/radioHard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Сложно"/>
-    </RadioGroup>
 
     <Button
         android:id="@+id/btnStart"
-        android:backgroundTint="#325aaf"
-        android:layout_width="match_parent"
+        android:backgroundTint="#3f7bc3"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="Начать игру"
         android:textStyle="bold"
-
-        android:textSize="20dp"
-        android:fontFamily="@font/Arteks_regular"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"/>
+        android:textSize="16dp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/arteks_regular"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="center_horizontal"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Лучший результат:"
         android:textStyle="bold"
-        android:fontFamily="@font/Arteks_black"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:fontFamily="@font/arteks_black"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"/>

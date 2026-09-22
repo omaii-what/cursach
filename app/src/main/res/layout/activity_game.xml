@@ -39,7 +39,13 @@
 
     <Button
         android:id="@+id/btnHint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Подсказка"/>
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:text="Подсказка"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:fontFamily="@font/arteks_regular"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#325aaf"/>
 </LinearLayout>
