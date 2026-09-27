@@ -1,13 +1,13 @@
 package com.example.cursach
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class GameActivity : AppCompatActivity() {
@@ -27,10 +27,9 @@ class GameActivity : AppCompatActivity() {
     private var seconds = 0
     private var running = true
 
-    private lateinit var gridView: GridView
-    private lateinit var adapter: SudokuAdapter
     private lateinit var tvTimer: TextView
     private lateinit var tvErrors: TextView
+    private lateinit var board: SudokuBoardView
 
     private val handler = Handler(Looper.getMainLooper())
     private val tick = object : Runnable {
@@ -47,10 +46,29 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        tvTimer = findViewById(R.id.tvTimer)
+        tvErrors = findViewById(R.id.tvErrors)
+
+        board = findViewById(R.id.board)
+        board.onCellSelected = { r, c ->
+            selectedR = r
+            selectedC = c
+        }
+
+        if (savedInstanceState == null) {
+            startNewGame()
+        }
+
+        findViewById<Button>(R.id.btnHint).setOnClickListener { showHint() }
+
+        handler.postDelayed(tick, 1000)
+    }
+
+    private fun startNewGame() {
         size = Prefs.getSize(this)
         level = Prefs.getLevel(this)
-        boxCols = if (size == 4) 2 else 3
         boxRows = 2
+        boxCols = if (size == 4) 2 else 3
 
         solved = Sudoku.generateSolved(size)
 
@@ -63,25 +81,17 @@ class GameActivity : AppCompatActivity() {
         puzzle = Sudoku.makePuzzle(solved, size, emptyCount)
         fixed = Array(size) { r -> BooleanArray(size) { c -> puzzle[r][c] != 0 } }
 
-        tvTimer = findViewById(R.id.tvTimer)
-        tvErrors = findViewById(R.id.tvErrors)
+        selectedR = -1
+        selectedC = -1
+        errors = 0
+        seconds = 0
+        running = true
+        tvErrors.text = "Ошибки: 0"
         tvTimer.text = "Время: 00:00"
 
-        gridView = findViewById(R.id.grid)
-        gridView.numColumns = size
-
-        adapter = SudokuAdapter()
-        gridView.adapter = adapter
-        gridView.setOnItemClickListener { _, _, pos, _ ->
-            selectedR = pos / size
-            selectedC = pos % size
-            adapter.notifyDataSetChanged()
-        }
+        board.setBoard(size, boxRows, boxCols, puzzle, fixed)
 
         buildNumberButtons()
-        findViewById<Button>(R.id.btnHint).setOnClickListener { showHint() }
-
-        handler.postDelayed(tick, 1000)
     }
 
     private fun buildNumberButtons() {
@@ -90,7 +100,9 @@ class GameActivity : AppCompatActivity() {
         for (n in 1..size) {
             val btn = Button(this)
             btn.text = n.toString()
-            btn.layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+            btn.layoutParams = LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
+            )
             btn.setOnClickListener { onNumber(n) }
             row.addView(btn)
         }
@@ -105,7 +117,7 @@ class GameActivity : AppCompatActivity() {
             errors++
             tvErrors.text = "Ошибки: $errors"
         }
-        adapter.notifyDataSetChanged()
+        refreshBoard()
         checkWin()
     }
 
@@ -122,8 +134,16 @@ class GameActivity : AppCompatActivity() {
         if (r < 0) return
         puzzle[r][c] = solved[r][c]
         fixed[r][c] = true
-        adapter.notifyDataSetChanged()
+        selectedR = r
+        selectedC = c
+        refreshBoard()
         checkWin()
+    }
+
+    private fun refreshBoard() {
+        board.selectedR = selectedR
+        board.selectedC = selectedC
+        board.invalidate()
     }
 
     private fun checkWin() {
@@ -145,65 +165,64 @@ class GameActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.putInt("size", size)
+        outState.putInt("level", level)
         outState.putInt("seconds", seconds)
         outState.putInt("errors", errors)
         outState.putInt("selR", selectedR)
         outState.putInt("selC", selectedC)
-        val flat = ArrayList<Int>()
-        for (r in 0 until size) for (c in 0 until size) flat.add(puzzle[r][c])
-        outState.putIntegerArrayList("puzzle", flat)
+
+        val flatPuzzle = ArrayList<Int>()
+        val flatSolved = ArrayList<Int>()
+        for (r in 0 until size) for (c in 0 until size) {
+            flatPuzzle.add(puzzle[r][c])
+            flatSolved.add(solved[r][c])
+        }
+        outState.putIntegerArrayList("puzzle", flatPuzzle)
+        outState.putIntegerArrayList("solved", flatSolved)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+
+        size = savedInstanceState.getInt("size", Prefs.getSize(this))
+        level = savedInstanceState.getInt("level", Prefs.getLevel(this))
+        boxRows = 2
+        boxCols = if (size == 4) 2 else 3
+
+        val flatPuzzle = savedInstanceState.getIntegerArrayList("puzzle")!!
+        val flatSolved = savedInstanceState.getIntegerArrayList("solved")!!
+
+        puzzle = Array(size) { IntArray(size) }
+        solved = Array(size) { IntArray(size) }
+        var k = 0
+        for (r in 0 until size) for (c in 0 until size) {
+            puzzle[r][c] = flatPuzzle[k]
+            solved[r][c] = flatSolved[k]
+            k++
+        }
+
+        fixed = Array(size) { r -> BooleanArray(size) { c -> puzzle[r][c] != 0 } }
+
         seconds = savedInstanceState.getInt("seconds")
         errors = savedInstanceState.getInt("errors")
         selectedR = savedInstanceState.getInt("selR")
         selectedC = savedInstanceState.getInt("selC")
-        val flat = savedInstanceState.getIntegerArrayList("puzzle")!!
-        var k = 0
-        for (r in 0 until size) for (c in 0 until size) puzzle[r][c] = flat[k++]
+        running = true
+
         tvTimer.text = "Время: ${Prefs.formatTime(seconds)}"
         tvErrors.text = "Ошибки: $errors"
-        adapter.notifyDataSetChanged()
+
+        board.setBoard(size, boxRows, boxCols, puzzle, fixed)
+        board.selectedR = selectedR
+        board.selectedC = selectedC
+        board.invalidate()
+
+        buildNumberButtons()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(tick)
-    }
-
-    inner class SudokuAdapter : BaseAdapter() {
-        override fun getCount(): Int = size * size
-        override fun getItem(position: Int): Any = position
-        override fun getItemId(position: Int): Long = position.toLong()
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val tv = convertView as? TextView ?: TextView(this@GameActivity).apply {
-                gravity = Gravity.CENTER
-                textSize = 22f
-                layoutParams = AbsListView.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-            }
-            val r = position / size
-            val c = position % size
-            val value = puzzle[r][c]
-
-            tv.text = if (value == 0) "" else value.toString()
-            tv.setTextColor(if (fixed[r][c]) Color.BLACK else Color.rgb(0, 0, 200))
-            tv.setBackgroundColor(
-                if (r == selectedR && c == selectedC) Color.LTGRAY else Color.TRANSPARENT
-            )
-
-            val left = if (c % boxCols == 0) 3 else 1
-            val top = if (r % boxRows == 0) 3 else 1
-            val right = if (c == size - 1) 3 else 1
-            val bottom = if (r == size - 1) 3 else 1
-            tv.setPadding(8 + left, 24 + top, 8 + right, 24 + bottom)
-
-            return tv
-        }
     }
 }

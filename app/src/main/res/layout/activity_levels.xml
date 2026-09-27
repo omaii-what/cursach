@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Сложность игры"
-        android:fontFamily="@font/arteks_black"
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
         android:textColor="#325aaf"
@@ -28,7 +27,6 @@
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:text="Лёгкий"
-        android:fontFamily="@font/arteks_regular"
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:backgroundTint="#56b3e9"/>
@@ -42,7 +40,6 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:fontFamily="@font/arteks_regular"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dp" />
 
@@ -51,7 +48,6 @@
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:text="Средний"
-        android:fontFamily="@font/arteks_regular"
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:backgroundTint="#4ea0dc" />
@@ -65,7 +61,6 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:fontFamily="@font/arteks_regular"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dp" />
 
@@ -74,7 +69,6 @@
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:text="Сложный"
-        android:fontFamily="@font/arteks_regular"
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:backgroundTint="#3f7bc3"/>
@@ -88,7 +82,6 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:fontFamily="@font/arteks_regular"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="60dp" />
 
@@ -99,7 +92,6 @@
         android:text="Назад"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:fontFamily="@font/arteks_regular"
         android:textColor="#FFFFFF"
         android:backgroundTint="#325aaf" />
 

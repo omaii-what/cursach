@@ -3,8 +3,6 @@ package com.example.cursach
 import kotlin.random.Random
 
 object Sudoku {
-
-    // Генерирует решённое судоку нужного размера (4 или 6)
     fun generateSolved(size: Int): Array<IntArray> {
         val boxRows = if (size == 4) 2 else 2
         val boxCols = if (size == 4) 2 else 3
@@ -13,7 +11,6 @@ object Sudoku {
         return grid
     }
 
-    // Рекурсивное заполнение (простой backtracking)
     private fun fill(grid: Array<IntArray>, size: Int, boxRows: Int, boxCols: Int): Boolean {
         for (r in 0 until size) {
             for (c in 0 until size) {
@@ -33,7 +30,6 @@ object Sudoku {
         return true
     }
 
-    // Проверка: можно ли поставить число n в клетку (r, c)
     fun isValid(
         grid: Array<IntArray>, r: Int, c: Int, n: Int,
         size: Int, boxRows: Int, boxCols: Int
@@ -52,7 +48,6 @@ object Sudoku {
         return true
     }
 
-    // Удаляет часть клеток — чем выше сложность, тем больше пустых
     fun makePuzzle(solved: Array<IntArray>, size: Int, emptyCount: Int): Array<IntArray> {
         val puzzle = Array(size) { solved[it].clone() }
         var removed = 0
