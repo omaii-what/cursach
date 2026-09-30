@@ -5,7 +5,6 @@ import android.content.Context
 object Prefs {
     private const val NAME = "sudoku"
 
-    // Настройки
     fun getLevel(ctx: Context): Int = ctx.getSharedPreferences(NAME, Context.MODE_PRIVATE)
         .getInt("level", 0) // 0 - легко, 1 - средне, 2 - сложно
 
@@ -20,7 +19,6 @@ object Prefs {
         ctx.getSharedPreferences(NAME, Context.MODE_PRIVATE).edit().putInt("size", size).apply()
     }
 
-    // Рекорды: ключ "record_{size}_{level}" -> секунды
     fun getRecord(ctx: Context, size: Int, level: Int): Int =
         ctx.getSharedPreferences(NAME, Context.MODE_PRIVATE)
             .getInt("record_${size}_$level", 0)
