@@ -6,7 +6,7 @@ object Prefs {
     private const val NAME = "sudoku"
 
     fun getLevel(ctx: Context): Int = ctx.getSharedPreferences(NAME, Context.MODE_PRIVATE)
-        .getInt("level", 0) // 0 - легко, 1 - средне, 2 - сложно
+        .getInt("level", 0)
 
     fun setLevel(ctx: Context, level: Int) {
         ctx.getSharedPreferences(NAME, Context.MODE_PRIVATE).edit().putInt("level", level).apply()
